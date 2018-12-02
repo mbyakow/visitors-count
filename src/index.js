@@ -31,8 +31,10 @@ const start = () => {
                 .catch(handleError);
         });
     })
-    .catch(() => {
-        console.log('Can\'t connect to database. Retry in 5 seconds.');
+    .catch((error) => {
+        console.log(`Can't connect to database ${config.database.url} ${config.database.name}.`);
+        console.log(error);
+        console.log('Retry in 5 seconds.');
         setTimeout(start, 5000);
     });
 };

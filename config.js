@@ -15,13 +15,13 @@ const dev = {
 
 const production = {
     app: {
-        port: parseInt(process.env.TEST_APP_PORT) || 8000,
-        countOnlyUniqueVisits: process.env.TEST_COUNT_ONLY_UNIQUE || false,
-        showVisitsForPeriod: process.env.TEST_SHOW_FOR_PERIOD || 1, // in minutes
+        port: parseInt(process.env.PROD_APP_PORT) || 8000,
+        countOnlyUniqueVisits: process.env.PROD_COUNT_ONLY_UNIQUE || false,
+        showVisitsForPeriod: process.env.PROD_SHOW_FOR_PERIOD || 1, // in minutes
     },
     database: {
-        url: process.env.TEST_DB_URL || 'mongodb://db',
-        name: process.env.TEST_DB_NAME || 'tracking'
+        url: process.env.PROD_DB_URL || 'mongodb://db',
+        name: process.env.PROD_DB_NAME || 'tracking'
     }
 };
 
