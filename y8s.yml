@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: ${PROJECT_NAME}
+  labels:
+    app: ${PROJECT_NAME}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${PROJECT_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${PROJECT_NAME}
+    spec:
+      containers:
+      - name: ${PROJECT_NAME}
+        image: eu.gcr.io/${GOOGLE_PROJECT_ID}/${PROJECT_NAME}:${CIRCLE_SHA1}
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
