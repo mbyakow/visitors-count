@@ -13,7 +13,7 @@ _NodeJS application, which shows the number of pageviews for the past 1 minute
 1. Create `.env` and put your settings for environment and database. 
 1. Run `npm start`.
 
-_(Alternatively) You can use [Docker](https://www.docker.com) to launch application. Use `docker-compose build` and `docker-compose up`._
+_(Alternatively) You can use [Docker](https://www.docker.com) to launch application. Use `docker-compose build` and `docker-compose up`. Application would be available on IP which you can find through `docker-machine env` command, for example, [192.168.99.100:8000](http://192.168.99.100:8000)._
 
 ## Configuration
 
