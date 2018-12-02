@@ -12,7 +12,6 @@ services:
     build: .
     environment:
       - NODE_ENV=production
-      - TEST_COUNT_ONLY_UNIQUE=false
     ports:
       - "8000:8000"
     links:

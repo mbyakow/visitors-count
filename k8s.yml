@@ -1,3 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ${PROJECT_NAME}
+spec:
+  selector:
+    app: ${PROJECT_NAME}
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  type: LoadBalancer
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -19,5 +32,10 @@ spec:
         image: eu.gcr.io/${GOOGLE_PROJECT_ID}/${PROJECT_NAME}:${CIRCLE_SHA1}
         ports:
         - name: http
-          containerPort: 80
+          containerPort: 8000
           protocol: TCP
+        env:
+        - name: NODE_ENV
+          value: production
+        - name: PROD_DB_URL
+          value: "mongodb://10.128.0.2:27017"
