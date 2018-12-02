@@ -1,6 +1,6 @@
 # Visits counter
 
-[![CircleCI](https://circleci.com/gh/mbyakow/visits-counter/tree/master.svg?style=svg)](https://circleci.com/gh/mbyakow/visitors-count)
+[![CircleCI](https://circleci.com/gh/mbyakow/visits-counter/tree/master.svg?style=svg)](https://circleci.com/gh/mbyakow/visits-counter)
 
 _NodeJS application, which shows the number of pageviews for the past 1 minute_.
 
