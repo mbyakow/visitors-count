@@ -3,6 +3,7 @@
     "es2015"
   ],
   "plugins": [
-    "require"
+    "require",
+    "transform-object-rest-spread"
   ]
 }

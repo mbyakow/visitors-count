@@ -1,67 +1,40 @@
-const express     = require('express');
-const MongoClient = require('mongodb').MongoClient;
-const config      = require('./config');
+const express       = require('express');
+const compression   = require('compression');
+const helmet        = require('helmet');
+const app           = express();
+const config        = require('../config');
+const db            = require('./db');
+const VisitTracking = require('./visitTracking');
 
-const app          = express();
-const port         = 8000;
-const targetPeriod = config.showVisitsForPeriod * 1000 * 60;
+const PORT = config.app.port;
 
 const handleError = (error) => {
     console.log(error);
 };
 
-MongoClient.connect(config.database.url, { useNewUrlParser: true })
-    .then((database) => {
-        return database.db('tracking').collection('sessions');
-    })
-    .then((db) => {
-        app.listen(port, () => {
-            console.log('We are live on ' + port);
+app.use(compression());
+app.use(helmet());
+
+const start = () => {
+    return db.then((db) => {
+        app.listen(PORT, '0.0.0.0', () => {
+            console.log(`We are live on ${PORT}`);
         });
 
         app.get('/', (req, res) => {
-            const visit = {
-                ip: req.header('x-forwarded-for') || req.connection.remoteAddress,
-                created_at: new Date()
-            };
-
-            const isSaveAllowed = () => {
-                return !config.countOnlyUniqueVisits ? new Promise((resolve) => {
-                    resolve(true);
-                }) : db.countDocuments({
-                    ip: visit.ip,
-                    created_at: {
-                        $gte: new Date(Date.now() - targetPeriod)
-                    }
-                }).then((count) => {
-                    return count === 0;
-                })
-            };
-
-            const saveVisit = (isSaveAllowed) => {
-                return isSaveAllowed ? db.insertOne(visit) : false;
-            };
-
-            const getVisitsCount = () => {
-                return db.countDocuments({
-                    created_at: {
-                        $gte: new Date(Date.now() - targetPeriod)
-                    }
-                })
-            };
-
             const showVisitsCount = (count) => {
-                res.send(parseInt(count), {}, 200);
+                res.send(count ? parseInt(count) : 0, {}, 200);
             };
 
-            isSaveAllowed()
-                .then(saveVisit)
-                .then(getVisitsCount)
+            new VisitTracking(db, req)
                 .then(showVisitsCount)
                 .catch(handleError);
         });
     })
-    .catch(handleError);
+    .catch(() => {
+        console.log('Can\'t connect to database. Retry in 5 seconds.');
+        setTimeout(start, 5000);
+    });
+};
 
-// не привязываться к определенному драйверу БД
-// разрыв БД
+start();

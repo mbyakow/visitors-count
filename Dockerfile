@@ -1,22 +1,12 @@
 FROM node:8
-
-# Create app directory
-WORKDIR /usr/src/app
-
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
+WORKDIR /usr/src/app/
 COPY package*.json ./
+RUN npm i
+CMD [ "npm", "run", "build" ]
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-
-# Bundle app source
+FROM mhart/alpine-node:8
+WORKDIR /usr/src/app/
+COPY --from=0 /usr/src/app .
 COPY . .
-
 EXPOSE 8000
-EXPOSE 27017
-
-CMD [ "npm", "run", "dev" ]
-
+CMD [ "npm", "run", "prod" ]
