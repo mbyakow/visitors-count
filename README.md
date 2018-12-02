@@ -1,6 +1,6 @@
 # Visits counter
 
-[![CircleCI](https://circleci.com/gh/mbyakow/visitors-count.svg?style=svg)](https://circleci.com/gh/mbyakow/visitors-count)
+[![CircleCI](https://circleci.com/gh/mbyakow/visits-counter/tree/master.svg?style=svg)](https://circleci.com/gh/mbyakow/visitors-count)
 
 _NodeJS application, which shows the number of pageviews for the past 1 minute_.
 
@@ -29,7 +29,7 @@ Application will choose set of variables depending on `NODE_ENV`. This variable 
 1. `DB_URL` &mdash; database connection string.
 1. `DB_NAME` &mdash; database name.
 1. `COUNT_ONLY_UNIQUE` &mdash; flag to count only unique visits. Available values: `true` or `false`. Default: `false`. 
-1. `SHOW_FOR_PERIOD` &mdash; A period to count visits, in minutes. Default: `1`. 
+1. `SHOW_FOR_PERIOD` &mdash; A period to count visits, in minutes. Default: `1`.
 
 ## Contributing
 
