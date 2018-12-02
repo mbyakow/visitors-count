@@ -1,8 +1,8 @@
 FROM node:8
 WORKDIR /usr/src/app/
-COPY package*.json ./
-RUN npm i
-CMD [ "npm", "run", "build" ]
+COPY package*.json .babelrc ./
+COPY src/ ./src/
+RUN npm i && npm run build
 
 FROM mhart/alpine-node:8
 WORKDIR /usr/src/app/
